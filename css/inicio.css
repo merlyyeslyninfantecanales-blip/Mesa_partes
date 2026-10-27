@@ -1,0 +1,153 @@
+body{background-color:var(--fondo);background-image:linear-gradient(125deg,rgb(242 250 255 / 72%),rgb(225 243 252 / 60%)),linear-gradient(rgb(36 107 138 / 8%),rgb(52 137 173 / 12%)),url('../img/fachada-index-limpia.png');background-position:center;background-size:cover;background-attachment:fixed;background-repeat:no-repeat;color:var(--texto);font-family:'Segoe UI',Arial,sans-serif}
+.contenedor{width:min(1140px,calc(100% - 48px));margin-inline:auto}
+.barra{background:var(--azul-oscuro);color:white;font-size:13px;box-shadow:0 2px 4px #0002}
+.barra .contenedor{min-height:40px;display:flex;align-items:center;gap:25px}
+.barra .contenedor>span,.barra .contenedor>a{display:inline-flex;align-items:center;gap:7px}
+.barra svg{width:15px;height:15px;flex:0 0 auto;stroke-width:1.9}
+.horario{margin-left:auto}
+.barra a:hover{text-decoration:underline}
+header{background:white;border-bottom:4px solid var(--dorado)}
+.identidad{display:flex;align-items:center;gap:20px;min-height:110px;padding-block:14px}
+.logo{flex:0 0 80px;height:82px;display:grid;place-items:center;background:transparent;box-shadow:none}
+.logo img{width:100%;height:100%;object-fit:contain;padding:4px}
+.nombre{flex:1}
+.nombre h1{margin:0 0 7px;color:var(--azul);font-size:clamp(16px,1.65vw,22px);line-height:1.25}
+.nombre p{margin:0;font-size:14px}
+.sello{display:flex;box-shadow:0 3px 12px #0002;font-size:10px;color:white}
+.sello>*{display:flex;align-items:center;padding:10px;background:#494949;border-right:1px solid white}
+.sello strong{background:#e60012}
+.sello span:last-child{background:#7b7b7b}
+main.contenedor{padding-block:25px 28px}
+.panel{background:rgb(255 255 255 / 94%);border-radius:10px;padding:30px;box-shadow:0 8px 28px #064b7812;backdrop-filter:blur(4px)}
+h2{display:flex;align-items:center;gap:9px;color:var(--azul);font-size:16px;margin:0;padding-bottom:14px;border-bottom:3px solid #eee;line-height:1.5}
+h2 svg{width:19px;height:19px;flex:0 0 auto;color:var(--azul-claro);stroke-width:2}
+.bienvenida{font-size:14px;line-height:1.9;margin:24px 0 30px}
+.servicios{display:grid;grid-template-columns:1fr 1fr;gap:30px;align-items:start}
+.servicio{border-left:5px solid;border-radius:8px;padding:23px 20px 20px 15px;box-shadow:0 5px 23px #00000009}
+.externo{border-color:var(--dorado)}
+.gestores{border-color:var(--azul-claro)}
+.servicio h3{display:flex;align-items:center;gap:9px;margin:0 0 10px;font-size:16px}
+.servicio h3 svg{width:20px;height:20px;flex:0 0 auto;color:var(--azul-claro);stroke-width:1.9}
+.externo h3,.gestores h3{color:var(--azul)}
+.servicio p{margin:0 0 25px;font-size:13px;line-height:1.6;color:var(--gris);min-height:42px}
+.acceso,.consulta{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:17px 12px;text-align:center;min-height:75px;box-shadow:0 5px 14px #0002}
+.acceso{color:white;border-radius:5px;border-bottom:3px solid #0002;transition:filter .15s,transform .15s}
+.acceso:hover{filter:brightness(.94);transform:translateY(-2px)}
+.acceso strong,.consulta strong{display:flex;align-items:center;justify-content:center;gap:9px;font-size:14px}
+.acceso strong svg,.consulta strong svg{width:19px;height:19px;flex:0 0 auto;stroke-width:2}
+.acceso small,.consulta small{font-size:11px}
+.rojo{background:linear-gradient(135deg,var(--azul-claro),var(--azul))}
+.verde{background:linear-gradient(135deg,var(--azul-claro),var(--azul));margin-top:49px}
+.consulta{margin-top:12px;color:#101a24;background:white}
+.consulta:hover{background:#f2f7fb}
+.informacion{display:grid;grid-template-columns:2fr 2.85fr;gap:25px;margin-top:26px}
+.informacion .panel{padding:25px}
+.informacion h2{font-size:13px;border-bottom-width:2px}
+.informacion section>p{color:#6a7c8d;font-size:11px;line-height:1.6;margin:20px 0 16px}
+.contador{display:flex;align-items:center;gap:22px;min-height:61px;margin-bottom:10px;border:1px solid var(--borde);border-left:4px solid var(--color);border-radius:6px;background:#fafbf9;padding:10px 21px}
+.contador>svg{width:25px;height:25px;flex:0 0 auto;color:var(--color);stroke-width:1.9}
+.contador div{display:flex;flex-direction:column;gap:2px}
+.contador strong{font-size:17px;color:var(--azul)}
+.contador small{font-size:10px;color:#596b7d}
+.tarjeta-social{padding:12px;background:#f0f2f5;border:1px solid #d8dde5;border-radius:9px;box-shadow:inset 0 1px 7px #0001}
+.perfil-social{display:flex;align-items:center;gap:9px;padding:10px;background:white}
+.perfil-social img{width:44px;height:48px;object-fit:contain}
+.perfil-social strong{color:#2362a5;font-size:14px;font-weight:500}
+.perfil-social small{display:block;margin-top:4px;font-size:10px}
+.fachada{width:100%;height:245px;display:block;object-fit:cover;margin-top:7px}
+.pie-social{background:white;padding:18px}
+.pie-social strong{font-size:16px;color:var(--azul)}
+.pie-social p{margin:7px 0 0;color:#687789;font-size:12px;line-height:1.6}
+footer{text-align:center;color:#edf9ff;background:var(--azul-oscuro);font-size:12px;padding:22px 24px 25px}
+a:focus-visible{outline:3px solid var(--dorado);outline-offset:4px}
+@media(max-width:1000px){.sello{display:none}
+.barra .contenedor{flex-wrap:wrap;gap:12px 22px;padding-block:10px}
+.horario{margin-left:0}
+.servicios{gap:20px}
+.acceso strong{font-size:12px}
+}
+@media(max-width:700px){body{background-attachment:scroll}.contenedor{width:calc(100% - 28px)}
+.identidad{gap:14px}
+.logo{flex-basis:65px;height:75px}
+.nombre p{font-size:12px}
+.panel,.informacion .panel{padding:22px 18px}
+.servicios,.informacion{grid-template-columns:1fr}
+.verde{margin-top:0}
+h2{font-size:14px}
+.bienvenida{margin-block:20px}
+.barra .contenedor{font-size:11px}
+.fachada{height:210px}
+}
+@media(prefers-reduced-motion:reduce){.acceso{transition:none}
+}
+
+
+.facebook-feed{display:block;width:100%;max-width:500px;margin:auto;background:white}
+.enlace-facebook{display:flex;align-items:center;justify-content:center;gap:7px;text-align:center;padding:13px 8px;color:#165ca6;background:white;font-size:13px;font-weight:600}
+.enlace-facebook svg{width:15px;height:15px}
+.enlace-facebook:hover{text-decoration:underline}
+
+
+/* Mantiene el logo dentro del encabezado, incluso con imágenes verticales. */
+.logo{display:flex;align-items:center;justify-content:center;min-width:0}
+.logo img{display:block;width:72px;height:78px;flex:none}
+@media(max-width:700px){.logo img{width:59px;height:69px}
+}
+
+/* Acabado calido de la portada. */
+.panel{border:1px solid var(--borde);box-shadow:0 12px 34px rgb(36 107 138 / 7%)}
+.servicio{background:#fffdfb;box-shadow:0 8px 24px rgb(36 107 138 / 6%)}
+.acceso{box-shadow:0 8px 18px rgb(36 107 138 / 16%)}
+.consulta{border:1px solid var(--borde);box-shadow:0 6px 16px rgb(36 107 138 / 7%)}
+
+/* Interacciones y movimiento sutil de la portada. */
+header{position:sticky;top:0;z-index:40;transition:box-shadow .25s ease}
+header.con-sombra{box-shadow:0 8px 28px rgb(52 137 173 / 12%)}
+.servicio{position:relative;isolation:isolate;overflow:hidden;transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease}
+.servicio::after{content:'';position:absolute;z-index:-1;inset:0;opacity:0;background:radial-gradient(360px circle at var(--puntero-x,50%) var(--puntero-y,50%),rgb(198 161 91 / 13%),transparent 66%);transition:opacity .25s ease;pointer-events:none}
+.servicio:hover{transform:translateY(-4px);box-shadow:0 15px 34px rgb(36 107 138 / 10%)}
+.servicio:hover::after{opacity:1}
+.acceso,.consulta{position:relative;overflow:hidden;transition:transform .18s ease,filter .18s ease,box-shadow .18s ease}
+.acceso:hover,.consulta:hover{transform:translateY(-2px)}
+.acceso:active,.consulta:active,.acceso.presionado,.consulta.presionado{transform:translateY(1px) scale(.995)}
+.acceso svg,.consulta svg{transition:transform .2s ease}
+.acceso:hover svg{transform:translateX(3px)}
+.consulta:hover svg{transform:scale(1.08)}
+.contador{transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease}
+.contador:hover{transform:translateX(4px);border-color:var(--color);box-shadow:0 6px 16px rgb(36 107 138 / 7%)}
+.volver-arriba{position:fixed;z-index:60;right:24px;bottom:24px;width:46px;height:46px;display:grid;place-items:center;color:#fff;background:linear-gradient(135deg,var(--azul-claro),var(--azul));border:1px solid rgb(255 255 255 / 20%);border-radius:50%;box-shadow:0 10px 24px rgb(52 137 173 / 24%);opacity:0;visibility:hidden;transform:translateY(12px);transition:opacity .2s ease,visibility .2s ease,transform .2s ease,box-shadow .2s ease}
+.volver-arriba.visible{opacity:1;visibility:visible;transform:translateY(0)}
+.volver-arriba:hover{box-shadow:0 13px 28px rgb(52 137 173 / 32%);transform:translateY(-2px)}
+.volver-arriba svg{width:21px;height:21px}
+.js .revelar{opacity:0;transform:translateY(18px);transition:opacity .5s ease,transform .5s ease;transition-delay:var(--retraso,0ms)}
+.js .revelar.visible{opacity:1;transform:translateY(0)}
+@media(max-width:700px){.volver-arriba{right:15px;bottom:15px;width:42px;height:42px}.servicio:hover{transform:none}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.servicio,.acceso,.consulta,.contador,.volver-arriba,.js .revelar{transition:none!important}.js .revelar{opacity:1;transform:none}.servicio:hover,.acceso:hover,.consulta:hover,.contador:hover{transform:none}}
+
+/* Jerarquia cromatica de los tres accesos principales. */
+.acceso.rojo{color:#fff;background:linear-gradient(135deg,#2b6787,#173f59);box-shadow:0 9px 20px rgb(23 63 89 / 24%)}
+.consulta{color:#101a24;background:#fff;border:1px solid var(--borde);box-shadow:0 8px 18px rgb(52 137 173 / 9%)}
+.acceso.verde{background:linear-gradient(135deg,var(--azul-claro),var(--azul));box-shadow:0 9px 20px rgb(36 107 138 / 22%)}
+.acceso.rojo:hover{color:#fff;background:linear-gradient(135deg,#337697,#1d4b67);filter:none}
+.consulta:hover{color:#101a24;background:#f2f7fb;filter:none}
+.acceso.verde:hover{background:linear-gradient(135deg,var(--azul-claro),var(--azul));filter:brightness(.94)}
+
+/* Datos oficiales de contacto del instituto. */
+.datos-instituto{display:grid;grid-template-columns:1.2fr repeat(3,auto) 1.5fr;align-items:center;gap:26px;text-align:left}.datos-instituto>div,.datos-instituto>a{display:flex;align-items:center;gap:10px;min-width:0}.datos-instituto>div:first-child{display:block}.datos-instituto strong,.datos-instituto span{display:block}.datos-instituto small{display:block;margin-bottom:3px;color:#dbf3fd;font-size:10px}.datos-instituto svg{width:20px;height:20px;flex:0 0 auto;color:var(--dorado)}.datos-instituto a{transition:color .2s ease,transform .2s ease}.datos-instituto a:hover{color:#fff;transform:translateY(-2px);text-decoration:none}
+@media(max-width:1000px){.datos-instituto{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.datos-instituto>div:first-child{grid-column:1/-1}}
+@media(max-width:700px){.datos-instituto{grid-template-columns:1fr}.datos-instituto>div:first-child{grid-column:auto}}
+
+/* Respuestas visuales adicionales. */
+.progreso-pagina{position:fixed;z-index:100;top:0;left:0;width:100%;height:4px;background:linear-gradient(90deg,var(--dorado),#75c7e8,var(--azul-claro));transform:scaleX(0);transform-origin:left;box-shadow:0 1px 8px rgb(36 107 138 / 22%);pointer-events:none}
+header .identidad{transition:min-height .24s ease,padding .24s ease}
+header.con-sombra .identidad{min-height:88px;padding-block:8px}
+.logo img{transition:transform .25s ease,filter .25s ease}
+.logo:hover img{transform:scale(1.06) rotate(-1.5deg);filter:drop-shadow(0 7px 9px rgb(52 137 173 / 18%))}
+.servicio.interactiva{transform:perspective(900px) rotateX(var(--giro-x,0deg)) rotateY(var(--giro-y,0deg)) translateY(-4px)}
+.acceso::after,.consulta::after{content:'';position:absolute;top:-35%;left:-55%;width:38%;height:170%;background:linear-gradient(90deg,transparent,rgb(255 255 255 / 28%),transparent);transform:skewX(-20deg);transition:left .55s ease;pointer-events:none}
+.acceso:hover::after,.consulta:hover::after{left:120%}
+.onda{position:absolute;z-index:2;border-radius:50%;background:rgb(255 255 255 / 34%);pointer-events:none;transform:translate(-50%,-50%) scale(0);animation:expandir-onda .55s ease-out forwards}
+.consulta .onda{background:rgb(255 255 255 / 26%)}
+@keyframes expandir-onda{to{opacity:0;transform:translate(-50%,-50%) scale(1)}}
+@media(prefers-reduced-motion:reduce){.progreso-pagina{display:none}.logo img,.acceso::after,.consulta::after{transition:none}.logo:hover img,.servicio.interactiva{transform:none}.onda{display:none}}
+

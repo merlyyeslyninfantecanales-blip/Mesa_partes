@@ -1,0 +1,12 @@
+/* Panel de Biblioteca: usa el diseño del panel de Secretaría (secretaria-admin.css y secretaria-funciones.css); aquí solo van los extras. */
+.admin-nav a b[hidden] { display: none; }
+.admin-field textarea + .contador-asunto { margin-top: 4px; color: #8a9895; font-size: .62rem; }
+.admin-table td.vacio { padding: 26px 14px; color: #8a9895; text-align: center; }
+.admin-table td > small.motivo { max-width: 260px; margin-top: 3px; color: #a63b32; white-space: normal; }
+.admin-table .archivos-col { display: inline-flex; align-items: center; gap: 6px; }
+.admin-table .archivos-col svg { width: 14px; height: 14px; color: var(--azul-claro); }
+.mensaje.info { color: var(--azul); background: var(--azul-suave); border: 1px solid var(--borde); }
+.intake-card .mensaje.visible.info, .intake-card .mensaje.visible.exito, .intake-card .mensaje.visible.error { margin: 12px 18px 0; }
+.tabla-vacia-icono { display: block; margin: 0 auto 6px; }
+.admin-sidebar .cerrar-sesion { margin-top: auto; }
+.intake-card .mensaje { font-size: .74rem; line-height: 1.45; }

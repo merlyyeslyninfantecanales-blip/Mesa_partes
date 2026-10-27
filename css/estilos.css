@@ -1,0 +1,25 @@
+:root { --azul: #246b8a; --azul-oscuro: #3489ad; --azul-claro: #56b6de; --azul-suave: #e8f7fd; --dorado: #c6a15b; --fondo: #f2faff; --texto: #2a2325; --gris: #756b6e; --borde: #d4eaf5; --blanco: #ffffff; --verde: #2f755a; --ambar: #a66f22; --rojo: #a63b32; } /* Define la paleta elegante en borgona, champan y marfil, junto con los colores semanticos. */
+* { box-sizing: border-box; } /* Incluye bordes en el tamaño de los elementos. */
+html { min-height: 100%; background: var(--fondo); } /* Extiende el fondo a toda la ventana. */
+body { min-height: 100vh; margin: 0; color: var(--texto); background: var(--fondo); font-family: Arial, Helvetica, sans-serif; } /* Configura el cuerpo del sitio. */
+a { color: inherit; text-decoration: none; } /* Elimina subrayados decorativos. */
+button, input, select, textarea { font: inherit; } /* Unifica la tipografía de controles. */
+button { cursor: pointer; } /* Indica que los botones son accionables. */
+button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible { outline: 3px solid rgba(38, 113, 226, 0.28); outline-offset: 2px; } /* Hace visible el foco del teclado. */
+.marca { display: flex; align-items: center; gap: 12px; } /* Ordena el logotipo y el nombre. */
+.marca img { width: 52px; height: 52px; object-fit: contain; } /* Ajusta el logotipo institucional. */
+.marca strong { display: block; color: var(--blanco); font-size: 1rem; } /* Destaca el nombre del sistema. */
+.marca small { color: #d4effb; font-size: .72rem; } /* Muestra las siglas institucionales. */
+.boton { min-height: 44px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 0 18px; color: var(--blanco); background: linear-gradient(135deg, var(--azul-claro), var(--azul)); border: 0; border-radius: 9px; font-weight: 700; } /* Diseña el botón principal. */
+.boton svg { flex: 0 0 auto; width: 19px; height: 19px; }
+.boton:hover { filter: brightness(1.08); } /* Resalta el botón al pasar el cursor. */
+.boton-secundario { color: var(--azul); background: var(--blanco); border: 1px solid var(--borde); } /* Diseña un botón secundario. */
+.campo { display: flex; flex-direction: column; gap: 7px; } /* Ordena etiqueta y control. */
+.campo label { color: #201dce; font-size: .86rem; font-weight: 700; } /* Diseña la etiqueta del campo. */
+.campo input, .campo select, .campo textarea { width: 100%; min-height: 46px; padding: 11px 13px; color: var(--texto); background: var(--blanco); border: 1px solid #cce3ef; border-radius: 9px; } /* Diseña los controles del formulario. */
+.campo textarea { min-height: 95px; resize: vertical; } /* Permite ampliar las observaciones. */
+.mensaje { display: none; padding: 12px 14px; border-radius: 9px; font-size: .84rem; } /* Prepara los mensajes del sistema. */
+.mensaje.visible { display: block; } /* Muestra un mensaje cuando corresponde. */
+.mensaje.exito { color: var(--verde); background: #e5f5ee; border: 1px solid #bce4d4; } /* Colorea las confirmaciones. */
+.mensaje.error { color: var(--rojo); background: #feeceb; border: 1px solid #f2c9c5; } /* Colorea los errores. */
+@media (max-width: 700px) { .boton { width: 100%; } } /* Amplía los botones en celulares. */

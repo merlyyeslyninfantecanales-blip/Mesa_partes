@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Administrador | Mesa de Partes</title>
+  <link rel="stylesheet" href="../css/estilos.css">
+  <link rel="stylesheet" href="../css/panel.css">
+  <link rel="stylesheet" href="../css/administrador.css">
+  <script src="https://unpkg.com/lucide@1.27.0/dist/umd/lucide.min.js" defer></script>
+  <script src="../js/iconos.js" defer></script>
+  <script src="../js/cuentas-temporales.js" defer></script>
+  <script src="../js/mesa-datos.js" defer></script>
+  <script src="../js/db-sync.js" defer></script>
+  <script src="../js/administrador.js" defer></script>
+</head>
+<body class="ad">
+  <main class="panel-app">
+    <aside class="barra-lateral">
+      <div class="marca"><img src="../img/logo-instituto.png" alt="Logo"><span><strong>Mesa de Partes</strong><small id="marca-siglas">IESTP CMVO</small></span></div>
+      <div class="perfil"><i id="perfil-iniciales">A</i><span><small>Sesión iniciada como</small><strong id="perfil-nombre">Administrador</strong></span></div>
+      <nav class="menu" aria-label="Menú del administrador">
+        <a href="#panel" data-vista="panel"><i data-lucide="layout-dashboard"></i>Panel de control</a>
+        <a href="#enviar" data-vista="enviar"><i data-lucide="send"></i>Enviar documentos</a>
+        <a href="#documentos" data-vista="documentos"><i data-lucide="files"></i>Documentos<b class="ad-badge" id="badge-doc" hidden>0</b></a>
+        <a href="#usuarios" data-vista="usuarios"><i data-lucide="users"></i>Usuarios</a>
+        <a href="#roles" data-vista="roles"><i data-lucide="shield-keyhole"></i>Roles y permisos</a>
+        <a href="#bitacora" data-vista="bitacora"><i data-lucide="scroll-text"></i>Bitácora</a>
+        <a href="#reportes" data-vista="reportes"><i data-lucide="chart-no-axes-combined"></i>Reportes</a>
+        <a href="#configuracion" data-vista="configuracion"><i data-lucide="settings"></i>Configuración</a>
+      </nav>
+      <button type="button" class="cerrar-sesion" id="btn-salir"><i data-lucide="log-out"></i>Cerrar sesión</button>
+    </aside>
+
+    <section class="area-panel">
+      <header class="cabecera"><strong id="cab-institucion">Instituto Contralmirante Manuel Villar Olivera</strong><span id="cab-fecha"></span></header>
+      <div class="contenido">
+        <div class="titulo-vista">
+          <div><h1 id="titulo-h1">Panel de administrador</h1><p id="titulo-p">Control general de usuarios, documentos y configuración.</p></div>
+          <div class="ad-titulo-acc">
+            <button type="button" class="boton boton-secundario" id="btn-registrar" data-en="panel documentos enviar"><i data-lucide="file-plus-2"></i>Registrar documento</button>
+            <button type="button" class="boton" id="btn-enviar" data-en="panel documentos"><i data-lucide="send"></i>Enviar documentos</button>
+            <button type="button" class="boton" id="btn-nuevo-usuario" data-en="usuarios"><i data-lucide="user-plus"></i>Nuevo usuario</button>
+            <button type="button" class="boton boton-secundario" id="rp-imp" data-en="reportes"><i data-lucide="printer"></i>Imprimir</button>
+            <button type="button" class="boton" id="rp-csv" data-en="reportes"><i data-lucide="download"></i>Exportar CSV</button>
+            <button type="button" class="boton" id="bi-csv" data-en="bitacora"><i data-lucide="download"></i>Exportar CSV</button>
+          </div>
+        </div>
+
+        <!-- ===== Panel de control ===== -->
+        <section id="vista-panel" class="ad-vista" hidden>
+          <div class="ad-banner">
+            <div><small>CENTRO DE CONTROL</small><h2 id="p-saludo">Bienvenido, administrador</h2><p id="p-resumen"></p></div>
+            <div class="ad-banner-acc"><button type="button" class="ad-blanco" data-go="enviar"><i data-lucide="send"></i>Enviar documentos</button><button type="button" class="ad-fantasma" data-go="usuarios"><i data-lucide="user-cog"></i>Gestionar usuarios</button></div>
+          </div>
+          <section class="estadisticas" id="p-stats"></section>
+          <div class="ad-dos">
+            <article class="tarjeta"><div class="tarjeta-titulo"><h2>Atención requerida</h2></div><ul class="ad-alertas" id="p-alertas"></ul></article>
+            <article class="tarjeta"><div class="tarjeta-titulo"><h2>Carga por área</h2><small class="ad-nota">Pulse un área para enviarle documentos</small></div><div class="ad-areas" id="p-areas"></div></article>
+          </div>
+          <div class="ad-dos">
+            <article class="tarjeta"><div class="tarjeta-titulo"><h2>Mi bandeja (Administración)</h2><a class="ad-link" href="#documentos" data-tab-go="bandeja">Ver todo</a></div><ul class="ad-lista" id="p-bandeja"></ul></article>
+            <article class="tarjeta"><div class="tarjeta-titulo"><h2>Actividad reciente</h2><a class="ad-link" href="#bitacora">Ver bitácora</a></div><ul class="ad-actividad" id="p-actividad"></ul></article>
+          </div>
+        </section>
+
+        <!-- ===== Enviar documentos ===== -->
+        <section id="vista-enviar" class="ad-vista" hidden>
+          <div class="ad-enviar">
+            <article class="tarjeta">
+              <div class="tarjeta-titulo"><h2><span class="ad-paso">1</span>Seleccione los documentos <span class="ad-chip" id="e-n">0</span></h2></div>
+              <div class="ad-barra-filtro"><label class="ad-buscar"><i data-lucide="search"></i><input id="e-q" type="search" placeholder="Buscar por código, remitente o asunto…"></label>
+                <select id="e-filtro"><option value="activos">Todos los activos</option><option value="bandeja">Solo mi bandeja</option><option value="pendientes">Pendientes de atención</option></select></div>
+              <div class="ad-elegir" id="e-lista"></div>
+            </article>
+            <article class="tarjeta">
+              <div class="tarjeta-titulo"><h2><span class="ad-paso">2</span>Destino y envío</h2></div>
+              <form id="f-enviar" class="ad-form">
+                <p class="ad-etq">Enviar a</p>
+                <div class="ad-areas-elegir" id="e-areas"></div>
+                <div class="ad-dos-campos">
+                  <label>Prioridad<select id="e-prior"><option value="">Mantener la actual</option><option>Alta</option><option>Media</option><option>Baja</option></select></label>
+                  <label>Plazo de atención<select id="e-plazo"><option value="0">Sin plazo</option><option value="1">1 día</option><option value="3">3 días</option><option value="5">5 días</option><option value="10">10 días</option></select></label>
+                </div>
+                <label>Indicaciones para el área<textarea id="e-ind" rows="3" placeholder="Ej.: Atender con carácter urgente e informar."></textarea></label>
+                <p class="ad-resumen" id="e-resumen"></p>
+                <div class="ad-pie"><button type="button" class="boton boton-secundario" id="e-registrar"><i data-lucide="file-plus-2"></i>Registrar y enviar uno nuevo</button><button type="submit" class="boton"><i data-lucide="send"></i>Enviar documentos</button></div>
+              </form>
+            </article>
+          </div>
+          <article class="tarjeta"><div class="tarjeta-titulo"><h2>Envíos recientes</h2></div><div class="tabla-contenedor"><table class="ad-tabla-s"><thead><tr><th>Fecha</th><th>Expediente</th><th>Asunto</th><th>Movimiento</th><th>Responsable</th></tr></thead><tbody id="e-recientes"></tbody></table></div></article>
+        </section>
+
+        <!-- ===== Documentos ===== -->
+        <section id="vista-documentos" class="ad-vista" hidden>
+          <div class="ad-tabs" id="d-tabs" role="tablist"></div>
+          <article class="tarjeta">
+            <div class="ad-barra-filtro"><label class="ad-buscar"><i data-lucide="search"></i><input id="d-q" type="search" placeholder="Buscar por código, remitente, DNI o asunto…"></label><select id="d-area"></select><select id="d-prior"><option value="">Toda prioridad</option><option>Alta</option><option>Media</option><option>Baja</option></select></div>
+            <div class="ad-lote" id="d-lote" hidden><span></span><button type="button" data-lote="enviar"><i data-lucide="send"></i>Enviar a otra área</button><button type="button" data-lote="atender"><i data-lucide="circle-check-big"></i>Marcar atendido</button><button type="button" data-lote="archivar"><i data-lucide="archive"></i>Archivar</button></div>
+            <div class="tabla-contenedor"><table class="ad-tabla-s">
+              <thead><tr><th class="c"><input type="checkbox" id="d-todos" aria-label="Seleccionar todo"></th><th>Código</th><th>Remitente / Asunto</th><th>Tipo</th><th>Área actual</th><th>Prioridad</th><th>Estado</th><th>Plazo</th><th>Acción</th></tr></thead>
+              <tbody id="d-tb"></tbody></table></div>
+          </article>
+        </section>
+
+        <!-- ===== Usuarios ===== -->
+        <section id="vista-usuarios" class="ad-vista" hidden>
+          <section class="estadisticas" id="u-stats"></section>
+          <article class="tarjeta">
+            <div class="tarjeta-titulo"><h2>Usuarios del sistema <span class="ad-chip" id="u-cont">0</span></h2></div>
+            <div class="ad-barra-filtro"><label class="ad-buscar"><i data-lucide="search"></i><input id="u-q" type="search" placeholder="Buscar por nombre o DNI / usuario…"></label><select id="u-rol"></select><select id="u-estado"><option value="">Todos los estados</option><option value="1">Activos</option><option value="0">Inactivos</option></select></div>
+            <div class="tabla-contenedor"><table class="ad-tabla-s"><thead><tr><th>Usuario</th><th>Nombre</th><th>Rol</th><th>Último acceso</th><th>Estado</th><th>Acciones</th></tr></thead><tbody id="u-tb"></tbody></table></div>
+          </article>
+        </section>
+
+        <!-- ===== Roles ===== -->
+        <section id="vista-roles" class="ad-vista" hidden>
+          <div class="ad-roles" id="ro-tarjetas"></div>
+          <article class="tarjeta"><div class="tarjeta-titulo"><h2>Funciones por rol</h2><small class="ad-nota">Lo que puede hacer cada rol en el sistema</small></div><div class="tabla-contenedor"><table class="ad-tabla-s" id="ro-matriz"></table></div></article>
+        </section>
+
+        <!-- ===== Bitácora ===== -->
+        <section id="vista-bitacora" class="ad-vista" hidden>
+          <article class="tarjeta">
+            <div class="tarjeta-titulo"><h2>Bitácora del sistema <span class="ad-chip" id="bi-cont">0</span></h2><small class="ad-nota">Registro de todo lo que ocurre: documentos, usuarios, accesos y sistema</small></div>
+            <div class="ad-barra-filtro"><label class="ad-buscar"><i data-lucide="search"></i><input id="bi-q" type="search" placeholder="Buscar en la bitácora…"></label><select id="bi-tipo"><option value="">Todos los eventos</option><option>Documentos</option><option>Usuarios</option><option>Accesos</option><option>Sistema</option></select></div>
+            <div class="tabla-contenedor"><table class="ad-tabla-s"><thead><tr><th>Fecha</th><th>Tipo</th><th>Responsable</th><th>Acción</th><th>Detalle</th></tr></thead><tbody id="bi-tb"></tbody></table></div>
+            <div class="ad-pie-tabla"><button type="button" class="boton boton-secundario" id="bi-mas">Mostrar más</button></div>
+          </article>
+        </section>
+
+        <!-- ===== Reportes ===== -->
+        <section id="vista-reportes" class="ad-vista" hidden>
+          <section class="estadisticas" id="rp-stats"></section>
+          <div class="ad-reportes" id="rp-cont"></div>
+        </section>
+
+        <!-- ===== Configuración ===== -->
+        <section id="vista-configuracion" class="ad-vista" hidden>
+          <div class="ad-dos">
+            <article class="tarjeta"><div class="tarjeta-titulo"><h2>Datos de la institución</h2></div>
+              <form class="ad-form" id="f-inst"><label>Nombre de la institución<input id="c-inst" required></label><label>Siglas<input id="c-siglas" required maxlength="20"></label><button type="submit" class="boton"><i data-lucide="save"></i>Guardar</button></form></article>
+            <article class="tarjeta"><div class="tarjeta-titulo"><h2>Reglas del sistema</h2></div>
+              <form class="ad-form" id="f-reglas"><label>Año de trabajo (numeración EXP-AÑO-0000)<select id="c-anio"></select></label><label>Plazo predeterminado al enviar documentos<select id="c-plazo"><option value="0">Sin plazo</option><option value="1">1 día</option><option value="3">3 días</option><option value="5">5 días</option><option value="10">10 días</option></select></label><label>Longitud mínima de la clave<select id="c-minclave"><option>4</option><option>6</option><option>8</option></select></label><button type="submit" class="boton"><i data-lucide="save"></i>Guardar reglas</button></form></article>
+          </div>
+          <div class="ad-dos">
+            <article class="tarjeta"><div class="tarjeta-titulo"><h2>Mi cuenta</h2></div>
+              <form class="ad-form" id="f-clave"><label>Nueva clave<input type="password" id="c-clave1" autocomplete="new-password"></label><label>Repetir clave<input type="password" id="c-clave2" autocomplete="new-password"></label><button type="submit" class="boton"><i data-lucide="key-round"></i>Cambiar clave</button></form></article>
+            <article class="tarjeta"><div class="tarjeta-titulo"><h2>Respaldo de datos</h2></div>
+              <div class="ad-form"><p class="ad-nota" id="c-ultimo"></p><div class="ad-pie izq"><button type="button" class="boton" id="c-respaldo"><i data-lucide="download"></i>Descargar respaldo</button><label class="boton boton-secundario" for="c-restaurar"><i data-lucide="upload"></i>Restaurar respaldo</label><input type="file" id="c-restaurar" accept="application/json,.json" hidden></div></div></article>
+          </div>
+          <article class="tarjeta ad-peligro"><div class="tarjeta-titulo"><h2>Zona de riesgo</h2><small class="ad-nota">Afectan a todos los expedientes de este navegador</small></div>
+            <div class="ad-form"><div class="ad-pie izq"><button type="button" class="boton boton-secundario" id="c-demo"><i data-lucide="rotate-ccw"></i>Restablecer datos de ejemplo</button><button type="button" class="boton ad-rojo" id="c-vaciar"><i data-lucide="trash-2"></i>Vaciar expedientes</button><button type="button" class="boton boton-secundario" id="c-limpiar-bit"><i data-lucide="eraser"></i>Limpiar bitácora</button></div></div></article>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <!-- Registrar documento -->
+  <dialog class="ad-dlg ancho" id="dlg-registrar">
+    <form id="f-registrar" method="dialog">
+      <h2>Registrar documento</h2>
+      <p class="ad-sub">Se crea un expediente nuevo con número automático <b id="rg-codigo"></b>.</p>
+      <div class="ad-dos-campos">
+        <label>Remitente *<input id="rg-remitente" required placeholder="Nombre completo o razón social"></label>
+        <label>DNI / RUC<input id="rg-dni" inputmode="numeric" maxlength="11"></label>
+        <label>Correo<input id="rg-correo" type="email"></label>
+        <label>Tipo de documento<select id="rg-tipo"></select></label>
+        <label>Canal<select id="rg-canal"></select></label>
+        <label>Folios<input id="rg-folios" type="number" min="1" value="1"></label>
+      </div>
+      <label>Asunto *<input id="rg-asunto" required placeholder="Resumen del trámite"></label>
+      <div class="ad-dos-campos">
+        <label>Prioridad<select id="rg-prior"><option>Baja</option><option selected>Media</option><option>Alta</option></select></label>
+        <label>Enviar a<select id="rg-area"></select></label>
+      </div>
+      <label>Indicaciones (opcional)<textarea id="rg-notas" rows="2"></textarea></label>
+      <div class="ad-pie"><button type="button" class="boton boton-secundario" data-cerrar>Cancelar</button><button type="submit" class="boton"><i data-lucide="file-plus-2"></i>Registrar y enviar</button></div>
+    </form>
+  </dialog>
+
+  <!-- Detalle -->
+  <dialog class="ad-dlg ancho" id="dlg-detalle"><div id="dd-cont"></div></dialog>
+
+  <!-- Usuario -->
+  <dialog class="ad-dlg" id="dlg-usuario">
+    <form id="f-usuario" method="dialog">
+      <h2 id="us-tit">Nuevo usuario</h2><p class="ad-sub" id="us-sub"></p>
+      <label>Nombre completo *<input id="us-nombre" required></label>
+      <div class="ad-dos-campos">
+        <label>DNI / usuario *<input id="us-usuario" required maxlength="20"></label>
+        <label>Rol *<select id="us-rol"></select></label>
+        <label>Clave <span id="us-clave-nota">*</span><input id="us-clave" type="password" autocomplete="new-password"></label>
+        <label>Estado<select id="us-activo"><option value="1">Activo</option><option value="0">Inactivo</option></select></label>
+      </div>
+      <div class="ad-pie"><button type="button" class="boton boton-secundario" data-cerrar>Cancelar</button><button type="submit" class="boton"><i data-lucide="save"></i>Guardar</button></div>
+    </form>
+  </dialog>
+
+  <!-- Confirmar -->
+  <dialog class="ad-dlg chico" id="dlg-confirmar">
+    <h2 id="cf-tit"></h2><p class="ad-sub" id="cf-txt"></p>
+    <div class="ad-pie"><button type="button" class="boton boton-secundario" data-cerrar>Cancelar</button><button type="button" class="boton" id="cf-ok">Confirmar</button></div>
+  </dialog>
+
+  <div class="ad-toasts" id="toasts" aria-live="polite"></div>
+</body>
+</html>

@@ -1,0 +1,13 @@
+{
+  "name": "sistema-mesa-partes",
+  "version": "2.0.0",
+  "description": "Sistema Mesa de Partes - IESTP CMVO Zorritos (frontend + API + MySQL)",
+  "main": "backend/servidor.js",
+  "scripts": {
+    "start": "node backend/actualizar-cuentas.js && node backend/servidor.js",
+    "dev": "node --watch backend/servidor.js",
+    "db:init": "node backend/inicializar-bd.js"
+  },
+  "engines": { "node": ">=18" },
+  "dependencies": { "mysql2": "^3.11.0" }
+}

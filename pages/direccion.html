@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dirección | Mesa de Partes</title>
+  <link rel="stylesheet" href="../css/estilos.css">
+  <link rel="stylesheet" href="../css/secretaria-admin.css">
+  <link rel="stylesheet" href="../css/direccion.css">
+  <script src="https://unpkg.com/lucide@1.27.0/dist/umd/lucide.min.js" defer></script>
+  <script src="../js/iconos.js" defer></script>
+  <script src="../js/mesa-datos.js" defer></script>
+  <script src="../js/db-sync.js" defer></script>
+  <script src="../js/direccion.js" defer></script>
+</head>
+<body class="di">
+  <main class="admin-app">
+    <aside class="admin-sidebar" id="barra-lateral">
+      <div class="admin-brand">
+        <img src="../img/logo-institutos.png" alt="Logo institucional">
+        <div><strong>Admin Panel</strong><small>Mesa de Partes</small></div>
+      </div>
+      <div class="admin-profile">
+        <span>DG</span>
+        <div><strong>Dirección General</strong><small>Despacho de dirección</small></div>
+        <i data-lucide="chevrons-up-down"></i>
+      </div>
+      <nav class="admin-nav" aria-label="Secciones">
+        <span class="nav-title">Despacho</span>
+        <a href="#despacho" data-vista="despacho"><i data-lucide="file-signature"></i><span>Despacho</span><b id="badge-despacho" hidden>0</b></a>
+        <a href="#areas" data-vista="areas"><i data-lucide="network"></i><span>Áreas</span></a>
+        <span class="nav-title">Control</span>
+        <a href="#resoluciones" data-vista="resoluciones"><i data-lucide="stamp"></i><span>Resoluciones</span></a>
+        <a href="#reportes" data-vista="reportes"><i data-lucide="chart-no-axes-combined"></i><span>Reportes</span></a>
+      </nav>
+      <button type="button" id="btn-salir" class="cerrar-sesion"><i data-lucide="log-out"></i>Cerrar sesión</button>
+    </aside>
+
+    <section class="admin-workspace">
+      <header class="admin-topbar">
+        <button id="toggle-menu" class="menu-toggle" type="button" aria-label="Abrir menú"><i data-lucide="menu"></i></button>
+        <div class="breadcrumb"><span>Mesa de Partes</span><i data-lucide="chevron-right"></i><strong id="migas">Despacho</strong></div>
+        <div class="top-actions">
+          <button type="button" id="btn-buscar-global" aria-label="Buscar expedientes" title="Buscar expedientes"><i data-lucide="search"></i></button>
+          <button class="notification" id="btn-notif" type="button" aria-label="Expedientes por decidir" title="Expedientes por decidir"><i data-lucide="bell"></i><span id="notif-punto" hidden></span></button>
+          <div class="top-user"><span>DG</span><div><strong>Dirección General</strong><small>En línea</small></div></div>
+        </div>
+      </header>
+
+      <div class="admin-content di-cuerpo">
+        <div class="page-heading">
+          <div><span class="eyebrow" id="titulo-eyebrow">CENTRO DE DECISIONES</span><h1 id="titulo-h1">Despacho de Dirección General</h1><p id="titulo-p">Revise, apruebe, observe o derive los expedientes desde una sola vista.</p></div>
+          <div class="heading-meta">
+            <span><i data-lucide="calendar-days"></i><b id="di-fecha"></b></span>
+            <button type="button" class="di-dorado" id="btn-derivar-global"><i data-lucide="send"></i>Derivar documentos</button>
+          </div>
+        </div>
+
+    <section id="vista-despacho" class="di-vista" hidden>
+      <div class="di-despacho">
+        <aside class="di-lista-col">
+          <div class="di-pestanas" id="d-pestanas" role="tablist"></div>
+          <label class="di-buscar"><i data-lucide="search"></i><input id="d-buscar" type="search" placeholder="Buscar expediente…"></label>
+          <div class="di-barra-lote" id="d-lote" hidden>
+            <span id="d-lote-n"></span>
+            <button type="button" data-lote="aprobar"><i data-lucide="check-check"></i>Aprobar</button>
+            <button type="button" data-lote="derivar"><i data-lucide="send"></i>Derivar</button>
+          </div>
+          <ul class="di-lista" id="d-lista"></ul>
+        </aside>
+        <article class="di-lectura" id="d-lectura"></article>
+      </div>
+    </section>
+
+    <section id="vista-areas" class="di-vista" hidden>
+      <p class="di-intro">Carga de trabajo de cada área. Pulse una tarjeta para ver sus expedientes en el despacho.</p>
+      <div class="di-areas" id="a-tarjetas"></div>
+    </section>
+
+    <section id="vista-resoluciones" class="di-vista" hidden>
+      <div class="di-fila-tit"><h2>Resoluciones y decisiones</h2>
+        <select id="r-tipo"><option value="">Todo</option><option value="Aprobación">Aprobaciones</option><option value="Providencia">Providencias (derivaciones)</option><option value="Observación">Observaciones</option><option value="Nota">Respuestas y notas</option></select></div>
+      <ol class="di-registro" id="r-lista"></ol>
+    </section>
+
+    <section id="vista-reportes" class="di-vista" hidden>
+      <div class="di-fila-tit"><h2>Reportes</h2><div><button type="button" class="di-btn" id="rp-csv"><i data-lucide="download"></i>Exportar CSV</button> <button type="button" class="di-btn" id="rp-imp"><i data-lucide="printer"></i>Imprimir</button></div></div>
+      <div class="di-reportes" id="rp-cont"></div>
+    </section>
+  </div>
+      </div>
+    </section>
+  </main>
+
+  <dialog class="di-dlg" id="dlg-derivar">
+    <form method="dialog" id="f-derivar">
+      <h2 id="dv-tit">Providencia: derivar documentos</h2>
+      <p class="di-sub" id="dv-sub"></p>
+      <div id="dv-elegir" hidden>
+        <label class="di-buscar chico"><i data-lucide="search"></i><input id="dv-buscar" type="search" placeholder="Buscar expediente para derivar…"></label>
+        <div class="di-elegir" id="dv-lista"></div>
+      </div>
+      <label>Derivar a<select id="dv-area"></select></label>
+      <div class="di-dos">
+        <label>Prioridad<select id="dv-prior"><option value="">Mantener</option><option>Alta</option><option>Media</option><option>Baja</option></select></label>
+        <label>Plazo<select id="dv-plazo"><option value="0">Sin plazo</option><option value="1">1 día</option><option value="3">3 días</option><option value="5" selected>5 días</option><option value="10">10 días</option></select></label>
+      </div>
+      <label>Providencia (instrucción para el área)<textarea id="dv-ind" rows="3" placeholder="Ej.: Atender con carácter urgente e informar."></textarea></label>
+      <div class="di-dlg-pie"><button type="button" class="di-btn" data-cerrar>Cancelar</button><button type="submit" class="di-dorado"><i data-lucide="send"></i>Derivar</button></div>
+    </form>
+  </dialog>
+
+  <dialog class="di-dlg" id="dlg-decision">
+    <form method="dialog" id="f-decision">
+      <h2 id="dc-tit"></h2><p class="di-sub" id="dc-sub"></p>
+      <label><span id="dc-etq">Comentario</span><textarea id="dc-texto" rows="4"></textarea></label>
+      <label id="dc-despues-wrap">Después de aprobar, enviar a<select id="dc-despues"></select></label>
+      <div class="di-dlg-pie"><button type="button" class="di-btn" data-cerrar>Cancelar</button><button type="submit" class="di-dorado" id="dc-ok">Aceptar</button></div>
+    </form>
+  </dialog>
+
+  <div class="di-toasts" id="toasts" aria-live="polite"></div>
+</body>
+</html>

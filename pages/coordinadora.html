@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Coordinación | Mesa de Partes</title>
+  <link rel="stylesheet" href="../css/estilos.css">
+  <link rel="stylesheet" href="../css/coordinacion.css">
+  <script src="https://unpkg.com/lucide@1.27.0/dist/umd/lucide.min.js" defer></script>
+  <script src="../js/iconos.js" defer></script>
+  <script src="../js/mesa-datos.js" defer></script>
+  <script src="../js/db-sync.js" defer></script>
+  <script src="../js/coordinadora.js" defer></script>
+</head>
+<body class="co">
+  <header class="co-top">
+    <div class="co-marca">
+      <img src="../img/logo-instituto.png" alt="Logo del instituto">
+      <div><strong>Coordinación Académica</strong><small>Mesa de Partes · IESTP CMVO</small></div>
+    </div>
+    <nav class="co-tabs" aria-label="Secciones">
+      <a href="#tablero" data-vista="tablero"><i data-lucide="kanban"></i>Tablero</a>
+      <a href="#enviar" data-vista="enviar"><i data-lucide="send"></i>Enviar documentos</a>
+      <a href="#seguimiento" data-vista="seguimiento"><i data-lucide="route"></i>Seguimiento</a>
+      <a href="#historial" data-vista="historial"><i data-lucide="history"></i>Historial</a>
+      <a href="#reportes" data-vista="reportes"><i data-lucide="chart-no-axes-combined"></i>Reportes</a>
+    </nav>
+    <div class="co-acciones">
+      <button class="co-enviar" id="btn-enviar-rapido" type="button"><i data-lucide="send"></i>Enviar / Derivar</button>
+      <button class="co-salir" id="btn-salir" type="button" title="Cerrar sesión"><i data-lucide="log-out"></i></button>
+    </div>
+  </header>
+
+  <main class="co-main">
+    <section id="vista-tablero" class="co-vista" hidden>
+      <div class="co-encabezado">
+        <div><h1>Tablero de Coordinación</h1><p>Expedientes que están en su área. Arrastre una tarjeta a otra columna o use los botones.</p></div>
+        <div class="co-filtros">
+          <label class="co-buscar"><i data-lucide="search"></i><input id="t-buscar" type="search" placeholder="Buscar código, remitente o asunto"></label>
+          <select id="t-tipo" aria-label="Tipo"><option value="">Todos los tipos</option></select>
+          <select id="t-prioridad" aria-label="Prioridad"><option value="">Toda prioridad</option><option>Alta</option><option>Media</option><option>Baja</option></select>
+        </div>
+      </div>
+      <div class="co-kpis" id="kpis"></div>
+      <div class="co-tablero" id="tablero"></div>
+    </section>
+
+    <section id="vista-enviar" class="co-vista" hidden>
+      <div class="co-encabezado"><div><h1>Enviar documentos</h1><p>Marque los expedientes, elija a dónde van y envíelos con indicaciones.</p></div></div>
+      <div class="co-enviar-grid">
+        <div class="co-panel">
+          <div class="co-panel-cab">
+            <h2>1. Expedientes a enviar</h2>
+            <label class="co-check"><input type="checkbox" id="e-todos"> Marcar todos</label>
+          </div>
+          <div id="e-lista" class="co-lista-sel"></div>
+        </div>
+        <form class="co-panel" id="e-form" novalidate>
+          <div class="co-panel-cab"><h2>2. Destino</h2></div>
+          <div id="e-destinos" class="co-destinos"></div>
+          <div class="co-fila">
+            <label>Prioridad<select id="e-prioridad"><option value="">Mantener</option><option>Alta</option><option>Media</option><option>Baja</option></select></label>
+            <label>Plazo de atención<select id="e-plazo"><option value="0">Sin plazo</option><option value="1">1 día</option><option value="3">3 días</option><option value="5" selected>5 días</option><option value="10">10 días</option><option value="15">15 días</option></select></label>
+          </div>
+          <label>Indicaciones para el área destino<textarea id="e-indic" rows="4" placeholder="Ej.: Revisar la documentación y emitir opinión técnica."></textarea></label>
+          <p class="co-resumen" id="e-resumen">Seleccione expedientes y un destino.</p>
+          <button class="co-enviar grande" type="submit"><i data-lucide="send"></i>Enviar expedientes</button>
+        </form>
+      </div>
+    </section>
+
+    <section id="vista-seguimiento" class="co-vista" hidden>
+      <div class="co-encabezado">
+        <div><h1>Seguimiento de lo enviado</h1><p>Expedientes que Coordinación derivó a otras áreas y en qué estado están.</p></div>
+        <div class="co-filtros">
+          <select id="s-area"><option value="">Todas las áreas</option></select>
+          <select id="s-estado"><option value="">Todos los estados</option></select>
+          <button class="co-btn" id="s-csv" type="button"><i data-lucide="download"></i>Exportar CSV</button>
+        </div>
+      </div>
+      <div class="co-panel flush"><div class="co-tabla-wrap"><table class="co-tabla"><thead><tr><th>Expediente</th><th>Asunto</th><th>Enviado a</th><th>Fecha de envío</th><th>Plazo</th><th>Estado actual</th><th></th></tr></thead><tbody id="s-cuerpo"></tbody></table></div></div>
+    </section>
+
+    <section id="vista-historial" class="co-vista" hidden>
+      <div class="co-encabezado">
+        <div><h1>Historial de movimientos</h1><p>Todo lo que Coordinación recibió, revisó y envió.</p></div>
+        <div class="co-filtros"><select id="h-accion"><option value="">Todas las acciones</option></select></div>
+      </div>
+      <div class="co-panel"><ol class="co-feed" id="h-feed"></ol></div>
+    </section>
+
+    <section id="vista-reportes" class="co-vista" hidden>
+      <div class="co-encabezado">
+        <div><h1>Reportes</h1><p>Resumen del trabajo de Coordinación.</p></div>
+        <div class="co-filtros"><button class="co-btn" id="r-csv" type="button"><i data-lucide="download"></i>Exportar CSV</button><button class="co-btn" id="r-imprimir" type="button"><i data-lucide="printer"></i>Imprimir</button></div>
+      </div>
+      <div class="co-reportes" id="reportes"></div>
+    </section>
+  </main>
+
+  <aside class="co-cajon" id="cajon" hidden aria-label="Detalle del expediente"></aside>
+  <div class="co-velo" id="velo" hidden></div>
+
+  <dialog class="co-dialogo" id="dlg-derivar">
+    <form method="dialog" id="f-derivar">
+      <h2 id="d-titulo">Derivar expediente</h2>
+      <p class="co-sub" id="d-sub"></p>
+      <label>Enviar a<select id="d-area" required></select></label>
+      <div class="co-fila">
+        <label>Prioridad<select id="d-prioridad"><option value="">Mantener</option><option>Alta</option><option>Media</option><option>Baja</option></select></label>
+        <label>Plazo<select id="d-plazo"><option value="0">Sin plazo</option><option value="1">1 día</option><option value="3">3 días</option><option value="5" selected>5 días</option><option value="10">10 días</option><option value="15">15 días</option></select></label>
+      </div>
+      <label>Indicaciones<textarea id="d-indic" rows="3" placeholder="Opcional"></textarea></label>
+      <div class="co-dlg-pie"><button type="button" class="co-btn" data-cerrar>Cancelar</button><button type="submit" class="co-enviar"><i data-lucide="send"></i>Enviar</button></div>
+    </form>
+  </dialog>
+
+  <dialog class="co-dialogo" id="dlg-texto">
+    <form method="dialog" id="f-texto">
+      <h2 id="x-titulo"></h2>
+      <p class="co-sub" id="x-sub"></p>
+      <label><span id="x-etiqueta">Comentario</span><textarea id="x-texto" rows="4"></textarea></label>
+      <div class="co-dlg-pie"><button type="button" class="co-btn" data-cerrar>Cancelar</button><button type="submit" class="co-enviar" id="x-ok">Aceptar</button></div>
+    </form>
+  </dialog>
+
+  <div class="co-toasts" id="toasts" aria-live="polite"></div>
+</body>
+</html>

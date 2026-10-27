@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Iniciar sesión | Mesa de Partes</title>
+  <link rel="stylesheet" href="../css/estilos.css">
+  <link rel="stylesheet" href="../css/login.css">
+  <script src="https://unpkg.com/lucide@1.27.0/dist/umd/lucide.min.js" defer></script>
+  <script src="../js/iconos.js" defer></script>
+</head>
+<body>
+  <main class="login">
+    <section class="login-identidad" aria-label="Presentación institucional">
+      <div class="puntos" aria-hidden="true"></div>
+      <div class="identidad-contenido">
+        <div class="identidad-principal">
+          <div class="logo-contenedor">
+            <img class="logo-grande" src="../img/logo-villar-transparente.png" alt="Logo del IESTP Contralmirante Manuel Villar Olivera">
+          </div>
+          <div class="identidad-texto">
+            <h1>Mesa de<br>Partes Virtual</h1>
+            <span class="acento" aria-hidden="true"></span>
+            <p>Instituto de Educación Superior Tecnológico Público<br><strong>“Contralmirante Manuel Villar Olivera”</strong></p>
+            <small>ZORRITOS</small>
+          </div>
+        </div>
+        <div class="beneficios" aria-label="Beneficios del servicio">
+          <div class="beneficio"><span class="beneficio-icono"><i data-lucide="file-check-2"></i></span><p>Trámites<br>más simples</p></div>
+          <div class="beneficio"><span class="beneficio-icono"><i data-lucide="shield-check"></i></span><p>Gestión<br>transparente</p></div>
+          <div class="beneficio"><span class="beneficio-icono"><i data-lucide="users-round"></i></span><p>Al servicio<br>de nuestra comunidad</p></div>
+        </div>
+      </div>
+    </section>
+    <section class="login-acceso">
+      <div class="tarjeta-login">
+        <a class="volver-inicio" href="../index.html">← Volver a servicios digitales</a>
+        <header>
+          <h2>Ingrese a su cuenta</h2>
+          <p>El sistema identificará su rol y mostrará automáticamente el panel correspondiente.</p>
+        </header>
+        <form id="formulario-login" class="formulario-login">
+          <div class="campo">
+            <label for="usuario">Usuario institucional</label>
+            <div class="control-con-icono">
+              <i class="icono-campo" data-lucide="user"></i>
+              <input id="usuario" autocomplete="username" required placeholder="Escriba su usuario">
+            </div>
+          </div>
+          <div class="campo">
+            <label for="clave">Contraseña</label>
+            <div class="control-con-icono">
+              <i class="icono-campo" data-lucide="lock-keyhole"></i>
+              <input id="clave" type="password" autocomplete="current-password" required placeholder="Escriba su contraseña">
+              <button id="mostrar-clave" class="mostrar-clave" type="button" aria-label="Mostrar contraseña" aria-pressed="false"><i data-lucide="eye"></i></button>
+            </div>
+          </div>
+          <div id="campo-dependencia" class="campo" hidden>
+            <label for="dependencia">Dependencia</label>
+            <div class="control-con-icono">
+              <i class="icono-campo" data-lucide="building-2"></i>
+              <input id="dependencia" readonly placeholder="Se identifica con su usuario" aria-describedby="ayuda-dependencia">
+            </div>
+          </div>
+          <small id="ayuda-dependencia" hidden>La dependencia se identifica automáticamente con su usuario institucional.</small>
+          <p id="mensaje-login" class="mensaje" role="alert"></p>
+          <button class="boton boton-ingresar" type="submit">Iniciar sesión <i data-lucide="arrow-right"></i></button>
+        </form>
+        <div class="separador"><span>Acceso rápido por rol</span></div>
+        <div class="cuentas">
+            <div class="cuenta-grupo gestores">
+              <button id="boton-gestores" class="cuenta" type="button" aria-expanded="false" aria-controls="opciones-gestores">
+                <i class="rol-icono gestor" data-lucide="graduation-cap"></i>
+                <span><strong>Gestores pedagógicos</strong><small>Seleccione un área</small></span>
+                <i class="cuenta-flecha" data-lucide="chevron-right"></i>
+              </button>
+              <div id="opciones-gestores" class="opciones-gestores" hidden>
+                <button class="opcion-gestor" type="button" data-usuario="secretaria_academica"><i data-lucide="book-open-check"></i><span>Secretaría Académica</span></button>
+                <button class="opcion-gestor" type="button" data-usuario="coordinador"><i data-lucide="network"></i><span>Coordinador</span></button>
+                <button class="opcion-gestor" type="button" data-usuario="direccion"><i data-lucide="building-2"></i><span>Dirección</span></button>
+                <button class="opcion-gestor" type="button" data-usuario="administracion"><i data-lucide="briefcase-business"></i><span>Administración</span></button>
+                <button class="opcion-gestor" type="button" data-usuario="secretaria"><i data-lucide="files"></i><span>Secretaría</span></button>
+              </div>
+            </div>
+          <button class="cuenta" type="button" data-usuario="estudiante"><i class="rol-icono estudiante" data-lucide="book-open-check"></i><span><strong>Estudiantes</strong><small>estudiante</small></span><i class="cuenta-flecha" data-lucide="chevron-right"></i></button>
+          <button class="cuenta" type="button" data-usuario="externo"><i class="rol-icono externo" data-lucide="user-round"></i><span><strong>Usuarios externos</strong><small>externo</small></span><i class="cuenta-flecha" data-lucide="chevron-right"></i></button>
+        </div>
+        <p class="clave-demo"><i data-lucide="shield-check"></i> Contraseña de demostración: <strong>1234</strong></p>
+      </div>
+    </section>
+  </main>
+  <script src="../js/cuentas-temporales.js"></script>
+    <script src="../js/db-sync.js"></script>
+  <script src="../js/login.js"></script>
+</body>
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Biblioteca | Mesa de Partes</title>
+  <link rel="stylesheet" href="../css/estilos.css">
+  <link rel="stylesheet" href="../css/secretaria-admin.css">
+  <link rel="stylesheet" href="../css/secretaria-funciones.css">
+  <link rel="stylesheet" href="../css/bibliotecaria.css">
+  <script src="https://unpkg.com/lucide@1.27.0/dist/umd/lucide.min.js" defer></script>
+  <script src="../js/iconos.js" defer></script>
+  <script src="../js/mesa-datos.js" defer></script>
+  <script src="../js/db-sync.js" defer></script>
+  <script src="../js/bibliotecaria.js" defer></script>
+</head>
+<body>
+  <main class="admin-app">
+    <aside class="admin-sidebar" id="barra-lateral">
+      <div class="admin-brand">
+        <img src="../img/logo-institutos.png" alt="Logo institucional">
+        <div><strong>Biblioteca</strong><small>Mesa de Partes</small></div>
+      </div>
+      <div class="admin-profile">
+        <span>BI</span>
+        <div><strong>Bibliotecaria</strong><small>Envío de documentos</small></div>
+      </div>
+      <nav class="admin-nav" aria-label="Menú de Biblioteca">
+        <span class="nav-title">Operaciones</span>
+        <a href="#enviar" data-vista="enviar"><i data-lucide="send"></i><span>Enviar documento</span></a>
+        <a href="#seguimiento" data-vista="seguimiento"><i data-lucide="route"></i><span>Seguimiento</span><b id="badge-envios" hidden>0</b></a>
+      </nav>
+      <button class="cerrar-sesion" id="btn-salir" type="button"><i data-lucide="log-out"></i>Cerrar sesión</button>
+    </aside>
+
+    <section class="admin-workspace">
+      <header class="admin-topbar">
+        <button id="toggle-menu" class="menu-toggle" type="button" aria-label="Abrir menú"><i data-lucide="menu"></i></button>
+        <div class="breadcrumb"><span>Mesa de Partes</span><i data-lucide="chevron-right"></i><strong id="migas">Enviar documento</strong></div>
+        <div class="top-actions">
+          <div class="top-user"><span>BI</span><div><strong>Bibliotecaria</strong><small>En línea</small></div></div>
+        </div>
+      </header>
+
+      <div class="admin-content">
+        <div class="page-heading">
+          <div><span class="eyebrow" id="titulo-eyebrow">BIBLIOTECA → SECRETARÍA</span><h1 id="titulo-h1">Envío de documentos</h1><p id="titulo-p">Envía documentos a la Secretaría de Mesa de Partes.</p></div>
+          <div class="heading-meta"><span><i data-lucide="calendar-days"></i><b id="meta-fecha"></b></span><span><i data-lucide="clock-3"></i><b id="meta-hora"></b></span></div>
+        </div>
+
+        <section class="metrics-grid" aria-label="Resumen de envíos">
+          <article><span class="metric-icon blue"><i data-lucide="send"></i></span><div><small>Enviados</small><strong data-k="total">0</strong><em>En total</em></div></article>
+          <article><span class="metric-icon amber"><i data-lucide="timer"></i></span><div><small>Por recibir</small><strong data-k="pendientes">0</strong><em>Esperando a Secretaría</em></div></article>
+          <article><span class="metric-icon green"><i data-lucide="circle-check-big"></i></span><div><small>Recibidos</small><strong data-k="recibidos">0</strong><em>Con expediente creado</em></div></article>
+          <article><span class="metric-icon violet"><i data-lucide="corner-up-left"></i></span><div><small>Observados</small><strong data-k="observados">0</strong><em>Devueltos con motivo</em></div></article>
+        </section>
+
+        <!-- ===== Enviar documento ===== -->
+        <section id="vista-enviar" class="vista" hidden>
+          <section class="admin-card intake-card">
+            <div class="card-title-row">
+              <div><span class="section-icon"><i data-lucide="send"></i></span><div><h2>Enviar documento a Secretaría</h2><p>Completa los datos y adjunta el archivo. La Secretaría lo recibirá y lo derivará al área que corresponda.</p></div></div>
+            </div>
+            <div id="e-mensaje" class="mensaje" role="status" aria-live="polite"></div>
+            <form id="f-envio" class="intake-form" novalidate>
+              <div class="admin-field"><label for="e-tipo">Tipo de documento *</label><div class="admin-control"><i data-lucide="files"></i><select id="e-tipo" required><option value="">--SELECCIONE--</option><option>Solicitud</option><option>Carta</option><option>Oficio</option><option>Informe</option><option>Memorando</option><option>Otros</option></select><i class="select-arrow" data-lucide="chevron-down"></i></div></div>
+              <div class="admin-field"><label for="e-numero">N.º del documento *</label><div class="admin-control"><i data-lucide="file-text"></i><input id="e-numero" maxlength="100" placeholder="Ej. Oficio N.º 001-2026-BIB" required></div></div>
+              <div class="admin-field"><label for="e-folios">Folios *</label><div class="admin-control"><i data-lucide="layers"></i><input id="e-folios" type="number" min="1" max="999999" step="1" value="1" required></div></div>
+              <div class="admin-field span-3"><label for="e-asunto">Asunto *</label><textarea id="e-asunto" rows="3" maxlength="900" placeholder="Describe el asunto del documento" required></textarea><small class="contador-asunto" id="e-caracteres">900 caracteres restantes</small></div>
+              <div class="admin-field span-3">
+                <label for="e-archivo">Documento principal * (PDF · máx. 50 MB)</label>
+                <div class="zona-adjuntos">
+                  <label class="boton-adjuntar" for="e-archivo"><i data-lucide="paperclip"></i>Seleccionar PDF</label>
+                  <input id="e-archivo" type="file" accept=".pdf,application/pdf" hidden>
+                  <ul id="e-lista-principal" class="lista-archivos"></ul>
+                </div>
+              </div>
+              <div class="admin-field span-3">
+                <label for="e-anexos">Anexos [opcional] (PDF, Word o JPG · máx. 20 MB c/u)</label>
+                <div class="zona-adjuntos">
+                  <label class="boton-adjuntar" for="e-anexos"><i data-lucide="paperclip"></i>Adjuntar anexos</label>
+                  <input id="e-anexos" type="file" multiple accept=".pdf,.doc,.docx,.jpg,.jpeg" hidden>
+                  <ul id="e-lista-anexos" class="lista-archivos"></ul>
+                </div>
+              </div>
+              <div class="form-footer"><span><i data-lucide="shield-check"></i>Destino: <b>Secretaría de Mesa de Partes</b> · Usuario: <b>Bibliotecaria</b></span><div><button class="button-secondary" type="button" id="e-limpiar">Limpiar</button><button class="button-primary" type="submit" id="e-enviar"><i data-lucide="send"></i><span>Enviar a Secretaría</span></button></div></div>
+            </form>
+          </section>
+        </section>
+
+        <!-- ===== Seguimiento ===== -->
+        <section id="vista-seguimiento" class="vista" hidden>
+          <section class="admin-card">
+            <div class="card-title-row">
+              <div><span class="section-icon"><i data-lucide="route"></i></span><div><h2>Documentos enviados a Secretaría</h2><p>El estado se actualiza cuando la Secretaría recibe u observa el documento.</p></div></div>
+              <div class="table-actions"><button type="button" id="s-actualizar"><i data-lucide="refresh-cw"></i>Actualizar</button></div>
+            </div>
+            <div class="table-toolbar"><div class="admin-search"><i data-lucide="search"></i><input id="s-q" placeholder="Buscar código, asunto o tipo..." aria-label="Buscar envíos"></div></div>
+            <div class="admin-table-wrap">
+              <table class="admin-table">
+                <thead><tr><th>Código</th><th>Documento</th><th>Archivos</th><th>Enviado</th><th>Estado</th></tr></thead>
+                <tbody id="s-tb"></tbody>
+              </table>
+            </div>
+          </section>
+        </section>
+      </div>
+    </section>
+  </main>
+  <div class="toasts" id="toasts" aria-live="polite"></div>
+</body>
+</html>
